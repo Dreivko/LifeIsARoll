@@ -47,12 +47,18 @@ public class PlayerController : MonoBehaviour {
 			other.gameObject.SetActive(false);
 			count = count + 1;
 			SetCountText ();
-		}		
+		}
+		if(other.gameObject.CompareTag("CPickUp")){
+			other.gameObject.SetActive(false);
+			count = count + 5;
+			SetCountText ();
+		}
+
 	}
 
 	void SetCountText () {
 		countText.text = "Count: " + count.ToString ();
-		if (count >= 11) {
+		if (count >= 16) {
 			winText.text = "You Win!";
 			t.Finnish ();
 		}
