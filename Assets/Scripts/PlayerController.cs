@@ -9,14 +9,24 @@ public class PlayerController : MonoBehaviour {
 	public Text countText;
 	public Text winText;
 
+	//Player
 	private Rigidbody rb;
-
 	private int count;
 	public float speed;
 
+	//Timer
 	private Timer t;
 
+	//Particles
+	public Transform particles;
+	private ParticleSystem ps;
+	private Vector3 position;
+
+	//Audio
+	private AudioSource audioRecollector;
+
 	void Awake (){
+		//Timer
 		t = GetComponent<Timer>();
 	}
 
@@ -27,6 +37,14 @@ public class PlayerController : MonoBehaviour {
 		count = 0;
 		SetCountText();
 		winText.text = "";
+
+		//Particles
+		ps = particles.GetComponent<ParticleSystem>();
+		ps.Stop();
+
+
+		//Audio
+		audioRecollector = GetComponent<AudioSource> ();
 	}
 	
 	// Update is called once per frame
@@ -44,11 +62,15 @@ public class PlayerController : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other){
 		if(other.gameObject.CompareTag("PickUp")){
+			ActiveParticles (other);
+			audioRecollector.Play ();
 			other.gameObject.SetActive(false);
 			count = count + 1;
 			SetCountText ();
 		}
 		if(other.gameObject.CompareTag("CPickUp")){
+			ActiveParticles (other);
+			audioRecollector.Play ();
 			other.gameObject.SetActive(false);
 			count = count + 5;
 			SetCountText ();
@@ -62,6 +84,13 @@ public class PlayerController : MonoBehaviour {
 			winText.text = "You Win!";
 			t.Finnish ();
 		}
+	}
+
+	void ActiveParticles(Collider other){
+		position = other.gameObject.transform.position;
+		particles.position = position;
+		ps = particles.GetComponent<ParticleSystem> ();
+		ps.Play ();
 	}
 
 

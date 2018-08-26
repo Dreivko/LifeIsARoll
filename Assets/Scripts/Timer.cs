@@ -9,9 +9,11 @@ public class Timer : MonoBehaviour {
 	private bool finnished = false;
 	private float startTime;
 
+
 	// Use this for initialization
 	void Start () {
 		startTime = Time.time;
+
 	}
 	
 	// Update is called once per frame
@@ -25,7 +27,7 @@ public class Timer : MonoBehaviour {
 		timer.text = minutes + ":" + seconds;
 	}
 
-	public void Finnish () {
+	public void Finnish () {			
 		finnished = true;
 		timer.color = Color.yellow;
 	}
