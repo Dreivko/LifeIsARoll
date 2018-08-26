@@ -22,6 +22,14 @@ public class PlayerController : MonoBehaviour {
 	private ParticleSystem ps;
 	private Vector3 position;
 
+	public Transform particles2;
+	private ParticleSystem ps2;
+	private Vector3 position2;
+	//win particles
+	public Transform particles3;
+	private ParticleSystem ps3;
+	private Vector3 position3;
+
 	//Audio
 	private AudioSource audioRecollector;
 
@@ -41,6 +49,11 @@ public class PlayerController : MonoBehaviour {
 		//Particles
 		ps = particles.GetComponent<ParticleSystem>();
 		ps.Stop();
+		ps2 = particles2.GetComponent<ParticleSystem>();
+		ps2.Stop();
+		//Win Particules
+		ps3 = particles3.GetComponent<ParticleSystem>();
+		ps3.Stop();
 
 
 		//Audio
@@ -69,7 +82,7 @@ public class PlayerController : MonoBehaviour {
 			SetCountText ();
 		}
 		if(other.gameObject.CompareTag("CPickUp")){
-			ActiveParticles (other);
+			ActiveParticles2 (other);
 			audioRecollector.Play ();
 			other.gameObject.SetActive(false);
 			count = count + 5;
@@ -82,6 +95,8 @@ public class PlayerController : MonoBehaviour {
 		countText.text = "Count: " + count.ToString ();
 		if (count >= 16) {
 			winText.text = "You Win!";
+			ps3 = particles3.GetComponent<ParticleSystem> ();
+			ps3.Play ();
 			t.Finnish ();
 		}
 	}
@@ -92,6 +107,15 @@ public class PlayerController : MonoBehaviour {
 		ps = particles.GetComponent<ParticleSystem> ();
 		ps.Play ();
 	}
+
+	void ActiveParticles2(Collider other){
+		position2 = other.gameObject.transform.position;
+		particles2.position = position2;
+		ps2 = particles2.GetComponent<ParticleSystem> ();
+		ps2.Play ();
+	}
+
+
 
 
 }
