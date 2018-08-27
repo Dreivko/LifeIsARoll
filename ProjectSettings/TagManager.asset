@@ -6,6 +6,7 @@ TagManager:
   tags:
   - PickUp
   - CPickUp
+  - Stair
   layers:
   - Default
   - TransparentFX

@@ -97,7 +97,7 @@ public class PlayerController : MonoBehaviour {
 
 	void SetCountText () {
 		countText.text = "Count: " + count.ToString ();
-		if (count >= 16) {
+		if (count >= 21) {
 			winText.text = "You Win!";
 			ps3 = particles3.GetComponent<ParticleSystem> ();
 			ps3.Play ();
