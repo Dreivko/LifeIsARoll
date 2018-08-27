@@ -90,6 +90,9 @@ public class PlayerController : MonoBehaviour {
 			count = count + 5;
 			SetCountText ();
 		}
+		if (other.gameObject.CompareTag ("DeathCube")) {
+			YouDied ();
+		}
 
 	}
 
@@ -103,6 +106,13 @@ public class PlayerController : MonoBehaviour {
 			ps3.Play ();
 			t.Finnish ();
 		}
+	}
+
+	void YouDied(){
+		rb.transform.position = new Vector3(0f,0.5f,0f);
+		speed = 0;
+		winText.text = "You Died";
+		t.Finnish ();
 	}
 
 	void ActiveParticles(Collider other){
