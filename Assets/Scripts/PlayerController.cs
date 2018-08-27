@@ -91,6 +91,13 @@ public class PlayerController : MonoBehaviour {
 
 	}
 
+	void OnTriggerStay(Collider other){
+		if(other.gameObject.CompareTag("Stair")){
+			Debug.Log ("Is this a stair?");
+			//other.gameObject.SetActive(false);
+		}
+	}
+
 	void SetCountText () {
 		countText.text = "Count: " + count.ToString ();
 		if (count >= 16) {
