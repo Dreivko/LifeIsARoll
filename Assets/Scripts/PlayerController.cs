@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour {
 
@@ -32,6 +33,10 @@ public class PlayerController : MonoBehaviour {
 
 	//Audio
 	private AudioSource audioRecollector;
+
+	//Levels
+	[SerializeField] private string loadLevel;
+
 
 	void Awake (){
 		//Timer
@@ -100,11 +105,13 @@ public class PlayerController : MonoBehaviour {
 
 	void SetCountText () {
 		countText.text = "Count: " + count.ToString ();
-		if (count >= 21) {
+		if (count >= 16) {
 			winText.text = "You Win!";
 			ps3 = particles3.GetComponent<ParticleSystem> ();
 			ps3.Play ();
 			t.Finnish ();
+			//Load level 2
+			//SceneManager.LoadScene (loadLevel);
 		}
 	}
 

@@ -211,6 +211,7 @@ MonoBehaviour:
   particles: {fileID: 0}
   particles2: {fileID: 0}
   particles3: {fileID: 0}
+  loadLevel: level-2
 --- !u!135 &135906856863392910
 SphereCollider:
   m_ObjectHideFlags: 1
