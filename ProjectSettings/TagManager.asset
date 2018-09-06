@@ -8,6 +8,7 @@ TagManager:
   - CPickUp
   - Stair
   - DeathCube
+  - TimePickup
   layers:
   - Default
   - TransparentFX

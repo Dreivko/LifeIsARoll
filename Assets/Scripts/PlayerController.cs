@@ -22,10 +22,10 @@ public class PlayerController : MonoBehaviour {
 	public Transform particles;
 	private ParticleSystem ps;
 	private Vector3 position;
-
 	public Transform particles2;
 	private ParticleSystem ps2;
 	private Vector3 position2;
+
 	//win particles
 	public Transform particles3;
 	private ParticleSystem ps3;
@@ -37,6 +37,10 @@ public class PlayerController : MonoBehaviour {
 	//Levels
 	[SerializeField] private string loadLevel;
 
+
+	// Time Cube
+	public GameObject TCube;
+	bool TCubeStat = true;
 
 	void Awake (){
 		//Timer
@@ -60,9 +64,11 @@ public class PlayerController : MonoBehaviour {
 		ps3 = particles3.GetComponent<ParticleSystem>();
 		ps3.Stop();
 
-
 		//Audio
 		audioRecollector = GetComponent<AudioSource> ();
+
+		// Time Cube
+		StartCoroutine(HideUnhide());
 	}
 	
 	// Update is called once per frame
@@ -80,13 +86,13 @@ public class PlayerController : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other){
 
-
 		if(other.gameObject.CompareTag("PickUp")){
 			ActiveParticles (other);
 			audioRecollector.Play ();
 			other.gameObject.SetActive(false);
 			count = count + 1;
 			SetCountText ();
+			StartCoroutine (StopParticles (ps));
 		}
 		if(other.gameObject.CompareTag("CPickUp")){
 			ActiveParticles2 (other);
@@ -94,9 +100,23 @@ public class PlayerController : MonoBehaviour {
 			other.gameObject.SetActive(false);
 			count = count + 5;
 			SetCountText ();
+			StartCoroutine (StopParticles (ps2));
 		}
 		if (other.gameObject.CompareTag ("DeathCube")) {
 			YouDied ();
+		}
+		if(other.gameObject.CompareTag("TimePickup")){
+			ActiveParticles (other);
+			audioRecollector.Play ();
+			StopCoroutine (HideUnhide ());
+			other.gameObject.SetActive(false);
+			TCubeStat = false;
+			string m = t.getMinutes();
+			string s = t.getSeconds();
+			Debug.Log ("Minute " + m + " : " + "Second " + s  );
+			//t.timer.text = (System.Int32.Parse(t.getSeconds()) - 1).ToString();
+			t.setSeconds("5");
+			StartCoroutine (StopParticles (ps));
 		}
 
 	}
@@ -110,8 +130,7 @@ public class PlayerController : MonoBehaviour {
 			ps3 = particles3.GetComponent<ParticleSystem> ();
 			ps3.Play ();
 			t.Finnish ();
-			//Load level 2
-			//SceneManager.LoadScene (loadLevel);
+			StartCoroutine (LoadLevel2 ());
 		}
 	}
 
@@ -136,7 +155,36 @@ public class PlayerController : MonoBehaviour {
 		ps2.Play ();
 	}
 
+	public IEnumerator StopParticles(ParticleSystem pasys){
+		yield return new WaitForSecondsRealtime (5);
 
+		pasys.Stop ();
+	}
 
+	public IEnumerator HideUnhide()
+	{	
+		while (true) {
+			if (TCubeStat == true) {
+				yield return (new WaitForSeconds (2));
+				TCube.transform.gameObject.SetActive (false);
+			} else {
+				break;
+			}
+			if(TCubeStat == true){
+				yield return (new WaitForSeconds (2));
+				TCube.transform.gameObject.SetActive (true);
+			} else {
+				break;
+			}
+		}
+
+	}
+
+	public IEnumerator LoadLevel2(){
+
+		yield return new WaitForSeconds (2);
+		//Load level 2
+		SceneManager.LoadScene (loadLevel);
+	}
 
 }
