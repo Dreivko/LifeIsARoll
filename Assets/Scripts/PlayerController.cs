@@ -69,6 +69,10 @@ public class PlayerController : MonoBehaviour {
 
 		// Time Cube
 		StartCoroutine(HideUnhide());
+
+		//Movement Cube 
+
+		StartCoroutine (MovementCube());
 	}
 	
 	// Update is called once per frame
@@ -185,6 +189,23 @@ public class PlayerController : MonoBehaviour {
 		yield return new WaitForSeconds (2);
 		//Load level 2
 		SceneManager.LoadScene (loadLevel);
+	}
+
+	public GameObject MCube;
+
+	public IEnumerator MovementCube (){
+
+		for (;;) {
+			if (Vector3.Distance (transform.position, MCube.transform.position) < 6) {
+				MCube.transform.position = Vector3.Lerp (MCube.transform.position, 
+					new Vector3 (Random.Range (-10.0f, 10.0f), 0.5f, Random.Range (-10.0f, 10.0f)), 
+					10.0f * Time.deltaTime);
+			}
+
+			yield return new WaitForSecondsRealtime (0.1f);
+		}
+
+
 	}
 
 }
