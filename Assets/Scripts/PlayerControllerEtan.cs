@@ -237,7 +237,6 @@ public class PlayerControllerEtan : MonoBehaviour {
 		yield return new WaitForSecondsRealtime (2.0f);
 		anim.SetBool ("ThrowPower", false);
 
-	
 	}
 
 	public void ThrowPower (){
