@@ -17,6 +17,12 @@ public class ShootController : MonoBehaviour {
 	float effectsDisplayTime = 1.2f;
 
 
+	// Particules
+	public Transform particles;
+	private ParticleSystem ps;
+	private Vector3 position;
+
+
 
 	void Awake (){
 		shootableMask = LayerMask.GetMask ("shootable");
@@ -26,6 +32,8 @@ public class ShootController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		ps = particles.GetComponent<ParticleSystem>();
+		ps.Stop();
 		
 	}
 	
@@ -54,8 +62,11 @@ public class ShootController : MonoBehaviour {
 		gunLine.SetPosition (0, ubication);
 
 		if (Physics.Raycast (shootRay, out shootHit, range, shootableMask)) {
+			ActiveParticles (shootHit.collider);
+			StartCoroutine (StopParticles (ps));
 			Destroy (shootHit.collider.gameObject);
 			gunLine.SetPosition (1, shootHit.point);
+
 		} else {
 			Debug.Log ("No hit");
 			gunLine.SetPosition (1, shootRay.origin + shootRay.direction * range);
@@ -66,6 +77,20 @@ public class ShootController : MonoBehaviour {
 	void DisableEffects (){
 		gunLine.enabled = false;
 		gunLight.enabled = false;
+	}
+		
+
+	void ActiveParticles(Collider other){
+		position = other.gameObject.transform.position;
+		particles.position = position;
+		ps = particles.GetComponent<ParticleSystem> ();
+		ps.Play ();
+	}
+
+	public IEnumerator StopParticles(ParticleSystem pasys){
+		yield return new WaitForSecondsRealtime (5);
+
+		pasys.Stop ();
 	}
 
 }
