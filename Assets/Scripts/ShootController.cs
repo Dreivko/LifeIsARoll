@@ -54,8 +54,15 @@ public class ShootController : MonoBehaviour {
 		gunLine.SetPosition (0, ubication);
 
 		if (Physics.Raycast (shootRay, out shootHit, range, shootableMask)) {
-			Destroy (shootHit.collider.gameObject);
+			//Destroy (shootHit.collider.gameObject);
 			gunLine.SetPosition (1, shootHit.point);
+			Resistance resist = shootHit.collider.gameObject.GetComponent<Resistance> ();
+			if (resist != null) {
+				Debug.Log (resist);
+				resist.shooted (shootHit.point);
+			}
+
+
 		} else {
 			Debug.Log ("No hit");
 			gunLine.SetPosition (1, shootRay.origin + shootRay.direction * range);
