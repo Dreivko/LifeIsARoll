@@ -18,7 +18,7 @@ public class Resistance : MonoBehaviour {
 		
 	}
 		
-	public void shooted(){
+	public void shooted(Vector3 ImpactDot){
 		resistance--;
 
 		if (resistance <= 0) {
