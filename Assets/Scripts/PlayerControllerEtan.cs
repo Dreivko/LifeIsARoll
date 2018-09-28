@@ -91,6 +91,9 @@ public class PlayerControllerEtan : MonoBehaviour {
 		if (Input.GetButtonDown ("Fire1")) {
 			Animate ();
 		}
+		if (Input.GetButtonDown ("Fire2")) {
+			ThrowPower ();
+		}
 	}
 
 	void FixedUpdate (){
@@ -228,6 +231,20 @@ public class PlayerControllerEtan : MonoBehaviour {
 		power.SendMessage ("Shoot");
 		anim.SetBool ("isSendingMagic", false);
 	}
+
+	public IEnumerator ThrowPowerCoRoutine (){
+		anim.SetBool ("ThrowPower",true);
+		yield return new WaitForSecondsRealtime (2.0f);
+		anim.SetBool ("ThrowPower", false);
+
+	
+	}
+
+	public void ThrowPower (){
+		StartCoroutine (ThrowPowerCoRoutine());
+		
+	}
+
 
 
 }

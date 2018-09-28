@@ -17,6 +17,9 @@ public class ShootController : MonoBehaviour {
 	float effectsDisplayTime = 1.2f;
 
 
+	ParticleSystem ps;
+
+
 
 	void Awake (){
 		shootableMask = LayerMask.GetMask ("shootable");
@@ -26,7 +29,7 @@ public class ShootController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+		ps = GetComponentInChildren<ParticleSystem> ();
 	}
 	
 	// Update is called once per frame
@@ -58,7 +61,8 @@ public class ShootController : MonoBehaviour {
 			gunLine.SetPosition (1, shootHit.point);
 			Resistance resist = shootHit.collider.gameObject.GetComponent<Resistance> ();
 			if (resist != null) {
-				Debug.Log (resist);
+				ps.transform.position = shootHit.point;
+				ps.Play ();
 				resist.shooted (shootHit.point);
 			}
 
