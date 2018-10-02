@@ -7,10 +7,13 @@ public class Resistance : MonoBehaviour {
 
 	public int resistance;
 
+	//Audio
+	private AudioSource audioRecollector;
 
 	// Use this for initialization
 	void Start () {
-
+		//Audio
+		audioRecollector = GetComponent<AudioSource> ();
 	}
 	
 	// Update is called once per frame
@@ -22,6 +25,7 @@ public class Resistance : MonoBehaviour {
 		resistance--;
 
 		if (resistance <= 0) {
+			audioRecollector.Play ();
 			Destroy (transform.gameObject);
 		}
 

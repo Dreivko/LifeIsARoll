@@ -24,11 +24,15 @@ public class PlayerControllerEtan : MonoBehaviour {
 	public Transform particles2;
 	private ParticleSystem ps2;
 	private Vector3 position2;
+	public ParticleSystem pf;
+
+
 
 	//win particles
 	public Transform particles3;
 	private ParticleSystem ps3;
 	private Vector3 position3;
+
 
 	//Audio
 	private AudioSource audioRecollector;
@@ -235,6 +239,8 @@ public class PlayerControllerEtan : MonoBehaviour {
 	public IEnumerator ThrowPowerCoRoutine (){
 		anim.SetBool ("ThrowPower",true);
 		yield return new WaitForSecondsRealtime (2.0f);
+		pf.Play ();
+		StartCoroutine (stopPower ());
 		anim.SetBool ("ThrowPower", false);
 
 	}
@@ -242,6 +248,12 @@ public class PlayerControllerEtan : MonoBehaviour {
 	public void ThrowPower (){
 		StartCoroutine (ThrowPowerCoRoutine());
 		
+	}
+
+	public IEnumerator stopPower (){
+		yield return new WaitForSecondsRealtime(2.0f);
+		pf.Stop();
+
 	}
 
 
