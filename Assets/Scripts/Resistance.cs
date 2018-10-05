@@ -30,4 +30,12 @@ public class Resistance : MonoBehaviour {
 		}
 
 	}
+
+
+	void OnParticleCollision(){
+		Debug.Log ("Shooted");
+		Destroy (transform.gameObject);
+	}
+
+
 }
