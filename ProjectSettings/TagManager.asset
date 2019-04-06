@@ -9,6 +9,10 @@ TagManager:
   - Stair
   - DeathCube
   - TimePickup
+  - GreenCube
+  - RedCube
+  - YellowCube
+  - BlueCube
   layers:
   - Default
   - TransparentFX

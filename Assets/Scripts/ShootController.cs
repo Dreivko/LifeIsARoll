@@ -15,7 +15,7 @@ public class ShootController : MonoBehaviour {
 	LineRenderer gunLine;
 	Light gunLight;
 	float effectsDisplayTime = 1.2f;
-
+	bool isRot = false;
 
 	ParticleSystem ps;
 
@@ -40,6 +40,12 @@ public class ShootController : MonoBehaviour {
 			DisableEffects ();
 
 		}
+		/*if (isRot == true){
+			StartCoroutine(Rotate(GameObject.Find("YellowCube")));
+		}
+		if (isRot == false) {
+			StartCoroutine(StopRotate(GameObject.Find("YellowCube")));
+		}*/
 
 	}
 
@@ -56,6 +62,8 @@ public class ShootController : MonoBehaviour {
 		shootRay.direction = transform.forward;
 		gunLine.SetPosition (0, ubication);
 
+
+
 		if (Physics.Raycast (shootRay, out shootHit, range, shootableMask)) {
 			//Destroy (shootHit.collider.gameObject);
 			gunLine.SetPosition (1, shootHit.point);
@@ -65,6 +73,43 @@ public class ShootController : MonoBehaviour {
 				ps.Play ();
 				resist.shooted (shootHit.point);
 			}
+
+			if (shootHit.collider.gameObject.CompareTag ("GreenCube")) {
+				GameObject GCube = shootHit.collider.gameObject;
+				GCube.transform.position = Vector3.Lerp (GCube.transform.position, 
+						new Vector3 (Random.Range (-10.0f, 10.0f), 0.5f, Random.Range (-10.0f, 10.0f)), 
+						10.0f * Time.deltaTime);
+
+				Debug.Log ("Green Cube");
+			}
+
+			if (shootHit.collider.gameObject.CompareTag ("RedCube")) {
+				shootHit.collider.gameObject.transform.position = 
+					new Vector3 (shootHit.collider.gameObject.transform.position.x,
+						shootHit.collider.gameObject.transform.position.y - 1,
+						shootHit.collider.gameObject.transform.position.z);
+				Debug.Log ("Red Cube");
+			}
+
+			if (shootHit.collider.gameObject.CompareTag ("YellowCube")) {
+				//GameObject YCube = shootHit.collider.gameObject;
+
+				//YCube.transform.Rotate (new Vector3 (15, 30, 45));
+				//YCube.transform.Rotate (new Vector3 (15, 30, 45));
+
+				//StartCoroutine( Rotate (YCube));
+
+				if (isRot == false) {
+					isRot = true;
+					Debug.Log (isRot);
+				} else {
+					isRot = false;
+					Debug.Log (isRot);
+				}
+
+				Debug.Log ("Yellow Cube");
+			}
+
 
 
 		} else {
@@ -78,5 +123,17 @@ public class ShootController : MonoBehaviour {
 		gunLine.enabled = false;
 		gunLight.enabled = false;
 	}
+
+	public IEnumerator Rotate (GameObject YCube){
+		
+		YCube.transform.Rotate (new Vector3 (15, 30, 45)*Time.deltaTime);
+		yield return new WaitForSecondsRealtime(3);
+	}
+	/*
+	public IEnumerator StopRotate (GameObject YCube){
+
+		YCube.transform.Rotate (new Vector3 (0,0,0));
+		yield return new WaitForSecondsRealtime(1);
+	}*/
 
 }

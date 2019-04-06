@@ -256,6 +256,25 @@ public class PlayerControllerEtan : MonoBehaviour {
 
 	}
 
+	public IEnumerator joke(){
+		anim.SetBool ("joke", true);
+		yield return new WaitForSecondsRealtime (1.5f);
+		anim.SetBool ("joke", false);
+	}
 
+
+	public void savePosition(){
+		PlayerPrefs.SetFloat ("Position x", transform.position.x);
+		PlayerPrefs.SetFloat ("Position y", transform.position.y);
+		PlayerPrefs.SetFloat ("Position z", transform.position.z);
+	}
+
+	public void loadPosition(){
+		float posx = PlayerPrefs.GetFloat("Position x");
+		float posy = PlayerPrefs.GetFloat("Position y");
+		float posz = PlayerPrefs.GetFloat("Position z");
+
+		transform.position = new Vector3 (posx,posy,posz);
+	}
 
 }
